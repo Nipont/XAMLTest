@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:XAMLTest" 
+             x:Class="XAMLTest.MainPage"
+             x:Name="mainPage"
+             >
+    <ContentPage.BindingContext>
+        <local:MainPageVM/>
+    </ContentPage.BindingContext>
+    <StackLayout>
+        <Button Text="Direct Value"  Clicked="Button_Clicked"/>
+
+        <Entry Placeholder="Note" x:Name="srcObj" Text="{Binding Note}"/>
+
+        <!--นอกจาก Binding กับพรอพเพอร์ตี้แล้วสามารถ Binding กับฟังก์ชั่นโดยตรงได้-->
+        <Label Text="{Binding DisplayNote}" /> 
+        
+        <!--แต่ไม่สามารถ Binding กับฟิลด์โดยตรงได้-->
+        <!--Label Text="{Binding field}"/-->
+
+        <!--การ Binding ใช้ Binding Context ของตนเอง (ไม่ใช้ของที่สืบทอดมา)-->
+        <Entry BindingContext="{x:Reference Name=srcObj}" Text="{Binding Path=Text}" />
+
+        <!--การ Binding แบบไม่ใช้ Binding Context-->
+        <Entry Text="{Binding Source={x:Reference srcObj}, Path=Text, Mode=OneWay}" />
+
+        <!--การ Binding กับ พรอพเพอร์ตี้ที่ไม่ได้เป็น BindableProperty ของ อินสแตนซ์ mainPage ของ MainPage จะไม่แสดงค่าที่ Update เนื่องจากผ่านกลไกของ INotifyPropertyChanged-->
+        <Label Text="{Binding Source={x:Reference mainPage}, Path=InternalProperty}}"/>
+
+        <!--การ Binding กับ พรอพเพอร์ตี้ของ อินสแตนซ์ mainPage ของ MainPage แบบหลายชั้นซ้อนกัน-->
+        <Label Text="{Binding Source={x:Reference mainPage}, Path=Content.Width}}"/>
+
+        <!--การ Binding กับ พรอพเพอร์ตี้ที่เป็น ViewModel ผ่านทางพรอพเพอร์ตี้ BindingContext ของ อินสแตนซ์ mainPage ของ MainPage แบบหลายชั้นซ้อนกัน-->
+        <Entry Text="{Binding Source={x:Reference mainPage}, Path=BindingContext.Note}}"/>
+
+        <!--การ Binding แบบ อ้างอิง Property อื่นของ Object ตัวเดียวกัน-->
+        <BoxView Color="Red"
+         WidthRequest="50"
+         HeightRequest="{Binding Source={RelativeSource Self}, Path=WidthRequest}"
+         HorizontalOptions="Center" />
+
+        <!-- x:Reference ไม่สามารถชี้ไปยัง ฟิลด์ ของคลาสได้-->
+        <!--Label Text="{Binding Source={x:Reference internalField}, Path=.}"/-->
+
+
+        <Button Text="Save" Command="{Binding SaveCommand}"/>
+        
+        <!-- Binding กับ พรอพเพอร์ตี้ Notes ที่อยู่ใน อินแสตนซ์ ของ MainPageVM-->
+        <CollectionView 
+            ItemsSource="{Binding Notes}"
+            >
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout>
+                        <Frame>
+                            <Label Text="{Binding .}"/>
+                        </Frame>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <CollectionView ItemsSource="{Binding Employees}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Name}"/>
+                            <Label Text="{Binding Surname}"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </StackLayout>
+
+</ContentPage>

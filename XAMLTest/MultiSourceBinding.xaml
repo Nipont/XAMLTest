@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Name="this"
+             x:Class="XAMLTest.MultiSourceBinding">
+    <Grid>
+        <CarouselView ItemsSource="{Binding MyData}">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Label Text="Click Link!" TextColor="#0173C7" FontSize="20">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BindingContext.OpenUrlCommand, Source={x:Reference this}}" CommandParameter="{Binding Url}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+    </Grid>
+</ContentPage>
