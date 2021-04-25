@@ -13,6 +13,7 @@
         <Button Text="Save" Command="{Binding SaveCommand}"/>
 
         <!--นอกจาก Binding กับพรอพเพอร์ตี้แล้วสามารถ Binding กับฟังก์ชั่นโดยตรงได้-->
+        <!-- สิ่งที่อยู่ภายในเครื่องหมาย {} คืออินสแตนซ์ของสิ่งนั้น อย่างในที่นี้คือ อินสแตนซ์ของคลาส Binding -->
         <Label Text="{Binding DisplayNote}" /> 
         
         <!--แต่ไม่สามารถ Binding กับฟิลด์โดยตรงได้-->
@@ -22,6 +23,8 @@
         <Entry BindingContext="{x:Reference Name=srcObj}" Text="{Binding Path=Text}" />
 
         <!--การ Binding แบบไม่ใช้ Binding Context-->
+        <!-- เนื่องจากพรอพเพอร์ตี้ Source ของคลาส Binding รับค่าเป็นอินสแตนซ์ จึงต้องกำกับสิ่งที่ส่ง่เข้าไปด้วย {} -->
+        <!-- ดูเรื่องการเขียน Markup Extension แบบ Shorthand ใน https://docs.microsoft.com/en-us/xamarin/xamarin-forms/xaml/markup-extensions/consuming#xstatic-markup-extension -->
         <Entry Text="{Binding Source={x:Reference srcObj}, Path=Text, Mode=OneWay}" />
 
         <!--การ Binding กับ พรอพเพอร์ตี้ที่ไม่ได้เป็น BindableProperty ของ อินสแตนซ์ mainPage ของ MainPage จะไม่แสดงค่าที่ Update เนื่องจากผ่านกลไกของ INotifyPropertyChanged-->
