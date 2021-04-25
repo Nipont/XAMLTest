@@ -20,7 +20,7 @@ namespace XAMLTest
             {
                 if (Employees.Count < 3)
                 {
-                    Employees.Add(new Employee { Name = s.ToString(), Surname = e.ToString() });
+                    Employees.Add(new Employee { Name = "Employee", Surname = (Employees.Count+1).ToString() });
                 }
                 else
                 {
@@ -28,10 +28,16 @@ namespace XAMLTest
                 }
             };
 
-            SaveCommand = new Command(() => {
-                Notes.Add(note);
-                Note = string.Empty;
-            });
+            SaveCommand = new Command(
+                execute:() => {
+                    Notes.Add(note);
+                    Note = string.Empty;
+                }
+                , canExecute: () =>
+                {
+                    return !(string.IsNullOrEmpty(Note));
+                }
+            );
         }
 
         public ObservableCollection<string> Notes { get; set; } = new ObservableCollection<string>();
@@ -68,6 +74,8 @@ namespace XAMLTest
                     // สามารถละอาร์กิวเมนต์ propertyName ได้เนื่องจากมีการกำหนด [CallerMemberName] ไว้ที่นิยามของอาร์กิวเมนต์แล้ว
                     RaisePropertyChanged();
 
+                    // เรียกเมธอด ChangeCanExecute เพื่อให้มีการตรวจสอบสถานะของปุ่ม
+                    SaveCommand.ChangeCanExecute();
                     //OnPropertyChanged(nameof(DisplayNote)); //เรียกตรงๆ แบบนี้ก็ได้ แต่ไม่เป็นที่นิยม
                     PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DisplayNote)));
                 }

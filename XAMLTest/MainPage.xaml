@@ -9,9 +9,8 @@
         <local:MainPageVM/>
     </ContentPage.BindingContext>
     <StackLayout>
-        <Button Text="Direct Value"  Clicked="Button_Clicked"/>
-
         <Entry Placeholder="Note" x:Name="srcObj" Text="{Binding Note}"/>
+        <Button Text="Save" Command="{Binding SaveCommand}"/>
 
         <!--นอกจาก Binding กับพรอพเพอร์ตี้แล้วสามารถ Binding กับฟังก์ชั่นโดยตรงได้-->
         <Label Text="{Binding DisplayNote}" /> 
@@ -44,7 +43,7 @@
         <!--Label Text="{Binding Source={x:Reference internalField}, Path=.}"/-->
 
 
-        <Button Text="Save" Command="{Binding SaveCommand}"/>
+        
         
         <!-- Binding กับ พรอพเพอร์ตี้ Notes ที่อยู่ใน อินแสตนซ์ ของ MainPageVM-->
         <CollectionView 
@@ -70,7 +69,11 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
+        <Button Text="Binding with Value Type"
+            Margin="0, 0, 10, 10"
+            HorizontalOptions="End"
+            Clicked="Button_Clicked"
+            />
     </StackLayout>
 
 </ContentPage>

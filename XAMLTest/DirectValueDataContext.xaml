@@ -3,20 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="XAMLTest.DirectValueDataContext">
     <ContentPage.BindingContext>
-        <x:String>Direct Value</x:String>
+        <x:String>I-am-string.</x:String>
     </ContentPage.BindingContext>
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding .}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" 
-                FontSize="50"   
-                    />
-            <Label Text="{Binding Length}"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" 
-                FontSize="50" 
-                   />
-        </StackLayout>
-    </ContentPage.Content>
+    <StackLayout>
+        <Label Text="{Binding .}"
+            VerticalOptions="CenterAndExpand" 
+            HorizontalOptions="CenterAndExpand" 
+            FontSize="50"   
+                />
+        <Label Text="{Binding Length}"
+            VerticalOptions="CenterAndExpand" 
+            HorizontalOptions="CenterAndExpand" 
+            FontSize="50" 
+                />
+    </StackLayout>
 </ContentPage>
